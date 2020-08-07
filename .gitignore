@@ -79,6 +79,8 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+.DS_Store
+
 # End of https://www.gitignore.io/api/go,git,linux,windows
 
 deps/*.deb
