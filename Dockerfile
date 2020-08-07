@@ -14,7 +14,7 @@ ENV CGO_ENABLED=1
 ENV GOOS=linux
 ENV GOARCH=386
 ENV GOPATH=/go
-ENV PCAP_VERSION=1.9.0
+ENV PCAP_VERSION=1.9.1
 ENV PATH=$PATH:/usr/local/go/bin
 
 ADD deps deps
@@ -29,16 +29,16 @@ RUN \
         tar -xvf go1.14.1.linux-amd64.tar.gz && \
         mv go /usr/local && \
         rm /tmp/go1.14.1.linux-amd64.tar.gz && \
-        wget http://www.tcpdump.org/release/libpcap-$PCAP_VERSION.tar.gz && \
-        tar xvf libpcap-$PCAP_VERSION.tar.gz && \
-        cd libpcap-$PCAP_VERSION && \
-        ./configure --host=i686-pc-linux-gnu --with-pcap=linux --prefix=/opt/libpcap-$PCAP_VERSION && \
+        wget http://www.tcpdump.org/release/libpcap-${PCAP_VERSION}.tar.gz && \
+        tar xvf libpcap-${PCAP_VERSION}.tar.gz && \
+        cd libpcap-${PCAP_VERSION} && \
+        ./configure --host=i686-pc-linux-gnu --with-pcap=linux --prefix=/opt/libpcap-${PCAP_VERSION} && \
         make && make install
 
 VOLUME [ "/eos_gopacket" ]
 
-ENV CGO_LDFLAGS="-L/opt/libpcap-1.9.0/lib"
-ENV CGO_CFLAGS="-I/opt/libpcap-1.9.0/include"
+ENV CGO_LDFLAGS="-L/opt/libpcap-${PCAP_VERSION}/lib"
+ENV CGO_CFLAGS="-I/opt/libpcap-${PCAP_VERSION}/include"
 
 RUN go get github.com/google/gopacket/pcap
 
